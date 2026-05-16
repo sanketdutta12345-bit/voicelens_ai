@@ -98,6 +98,12 @@ export default function App() {
         body: JSON.stringify({ image: rawImage }),
       });
 
+      if (!response.headers.get('content-type')?.includes('application/json')) {
+        const text = await response.text();
+        console.error('Non-JSON response:', text);
+        throw new Error(`Server returned non-JSON response. It might be a 404 or maintenance page. Check console for details.`);
+      }
+
       const data = await response.json();
       if (data.error) throw new Error(data.error);
 

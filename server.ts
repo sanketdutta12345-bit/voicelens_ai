@@ -21,6 +21,11 @@ const ai = new GoogleGenAI({
 
 app.use(express.json({ limit: '10mb' }));
 
+// API routes go here FIRST
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", env: process.env.NODE_ENV, vercel: !!process.env.VERCEL });
+});
+
 // OCR Endpoint
 app.post("/api/ocr", async (req, res) => {
   try {
@@ -68,9 +73,14 @@ async function start() {
     });
   }
 
+  // Bind to port 3000 and host 0.0.0.0
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
   });
 }
 
-start();
+export default app;
+
+if (process.env.NODE_ENV !== "test" && !process.env.VERCEL) {
+  start();
+}

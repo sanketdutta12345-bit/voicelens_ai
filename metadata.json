@@ -1,0 +1,6 @@
+{
+  "name": "VoiceLens",
+  "description": "Convert image text to voice with adjustable playback speed using AI OCR.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
